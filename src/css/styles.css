@@ -1,0 +1,27 @@
+body {
+  padding: 0;
+  margin: 0;
+  border: 0;
+  background-color: black;
+}
+
+.container-fluid, .row {
+  padding: 0;
+  margin: 0 auto;
+}
+
+.img-thumbnail {
+  margin: 5px auto;
+}
+
+#carousel {
+  display: none;
+}
+
+.carousel-inner > .item > img,
+.carousel-inner > .item > a > img {
+    max-width: 100%;
+    height: auto;
+    margin: 0 auto;
+}
+
