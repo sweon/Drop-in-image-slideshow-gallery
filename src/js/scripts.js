@@ -48,39 +48,44 @@ $(function() {
 });
 
 function thumbnail_list(urls) {
-  $('#thumbnail-row').empty();
+  if (urls.length > 0) {
+    $('#drop-here').css('display', 'none');
+    $('#thumbnail-row').empty();
 
-  localStorage.name = 'urls';
-  localStorage.urls = JSON.stringify(urls);
+    localStorage.name = 'urls';
+    localStorage.urls = JSON.stringify(urls);
 
-  var thumbnail = document.getElementById('thumbnail-row');
+    var thumbnail = document.getElementById('thumbnail-row');
 
-  for (var i = 0; i < urls.length; i++) {
-    var new_div = document.createElement('div');
-    new_div.className = 'col-sm-6 col-md-4 col-lg-3';
-    var new_img = document.createElement('img');
-    new_img.className = 'img-thumbnail';
-    new_img.src = urls[i];
-    new_img.id = i;
-    new_div.appendChild(new_img);
+    for (var i = 0; i < urls.length; i++) {
+      var new_div = document.createElement('div');
+      new_div.className = 'col-sm-6 col-md-4 col-lg-3';
+      var new_img = document.createElement('img');
+      new_img.className = 'img-thumbnail';
+      new_img.src = urls[i];
+      new_img.id = i;
+      new_div.appendChild(new_img);
 
-    thumbnail.appendChild(new_div);
+      thumbnail.appendChild(new_div);
 
-    if (i % 2 == 1) {
-      var new_clearfix = document.createElement('div');
-      new_clearfix.className = 'clearfix visible-sm-block';
-      thumbnail.appendChild(new_clearfix);
+      if (i % 2 == 1) {
+        var new_clearfix = document.createElement('div');
+        new_clearfix.className = 'clearfix visible-sm-block';
+        thumbnail.appendChild(new_clearfix);
+      }
+      if (i % 3 == 2) {
+        var new_clearfix = document.createElement('div');
+        new_clearfix.className = 'clearfix visible-md-block';
+        thumbnail.appendChild(new_clearfix);
+      }
+      if (i % 4 == 3) {
+        var new_clearfix = document.createElement('div');
+        new_clearfix.className = 'clearfix visible-lg-block';
+        thumbnail.appendChild(new_clearfix);
+      }
     }
-    if (i % 3 == 2) {
-      var new_clearfix = document.createElement('div');
-      new_clearfix.className = 'clearfix visible-md-block';
-      thumbnail.appendChild(new_clearfix);
-    }
-    if (i % 4 == 3) {
-      var new_clearfix = document.createElement('div');
-      new_clearfix.className = 'clearfix visible-lg-block';
-      thumbnail.appendChild(new_clearfix);
-    }
+  } else {
+    $('#drop-here').css('display', 'block');
   }
 
   $('#thumbnail img').click(function () {

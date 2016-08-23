@@ -25,3 +25,10 @@ body {
     margin: 0 auto;
 }
 
+.jumbotron {
+  margin: 10px;
+}
+
+.jumbotron p {
+  font-size: 300%;
+}
