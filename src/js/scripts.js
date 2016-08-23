@@ -1,11 +1,5 @@
 $(function() {
-  var urls = [
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Hopetoun_falls.jpg/1280px-Hopetoun_falls.jpg",
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/44_-_Iguazu_-_D%C3%A9cembre_2007.jpg/1920px-44_-_Iguazu_-_D%C3%A9cembre_2007.jpg",
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Ocean_from_Leblon.jpg/1280px-Ocean_from_Leblon.jpg",
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Aravalli.jpg/1280px-Aravalli.jpg",
-    "https://static.pexels.com/photos/3247/nature-forest-industry-rails.jpg"
-  ];
+  var urls = JSON.parse(localStorage.urls);
 
   thumbnail_list(urls);
 
@@ -13,12 +7,28 @@ $(function() {
     e.preventDefault();
   });
   $(document).bind('drop', function (e) {
-    var url = $(e.originalEvent.dataTransfer.getData('text/html')).filter('img').attr('src');
-    if (url) {
-      urls.push(url);
+    var url = $(e.originalEvent.dataTransfer.getData('text/html'));
+    if (url.filter('img').attr('class') == 'img-thumbnail') {
+      var data = url.filter('img').attr('id');
+      var el = document.getElementById(data);
+      $(el).hide(600);
+      el.parentNode.removeChild(el);
+      url = url.filter('img').attr('src');
+      urls.splice(urls.indexOf(url), 1);
       thumbnail_list(urls);
+    } else {
+     url = url.filter('img').attr('src');
+      if (url) {
+        urls.push(url);
+        thumbnail_list(urls);
+      }
     }
-    $('#myCarousel').carousel();
+  });
+
+  $('img').on("error", function() {
+    url = $(this).attr('src');
+    urls.splice(urls.indexOf(url), 1);
+    thumbnail_list(urls);
   });
 
   $(this).dblclick(function () {
@@ -30,10 +40,18 @@ $(function() {
     }
   });
 
+  $(this).keypress(function(e) {
+    if (e.which == 13 || e.which == 32) {
+      $('#myCarousel').carousel();
+    }
+  });
 });
 
 function thumbnail_list(urls) {
   $('#thumbnail-row').empty();
+
+  localStorage.name = 'urls';
+  localStorage.urls = JSON.stringify(urls);
 
   var thumbnail = document.getElementById('thumbnail-row');
 
